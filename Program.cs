@@ -12,7 +12,7 @@
             new List<int> { 12,18,22,21,16,0 }
         };
         const int PopulationSize = 20;
-        const int GenerationCount = 50;
+        const int GenerationCount = 5000;
         static void Main(string[] args)
         {
             List<Genome> Population = new List<Genome>();
@@ -60,7 +60,6 @@
                     //Удаление ненужных
                     Population.RemoveRange(PopulationSize - 1, Population.Count - PopulationSize);
                 }while(newChildNum-- > 0);
-                Population.ForEach(i => i.Mutate());
 
                 Console.WriteLine("Среднее значение оценочной функции поколения #{0} = {1}", Generation + 1, Population.Average(i => i.PathWeight));
             } while(Generation++ < GenerationCount);

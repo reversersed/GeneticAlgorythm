@@ -51,9 +51,10 @@ namespace GeneticAlgoritm
                 if (this.Path[i] == 0)
                     this.Path[i] = Enumerable.Range(0,parent1.Path.Count).Where(x => !this.Path.Contains(x)).First();
             }
+            this.Mutate(Map);
             this.PathWeight = CalculatePath(Map);
         }
-        public void Mutate()
+        public void Mutate(List<List<int>> Map)
         {
             int leftBound = Random.Shared.Next(1, this.Path.Count - 2);
             int rightBound = Random.Shared.Next(leftBound+1, this.Path.Count - 1);
@@ -72,6 +73,7 @@ namespace GeneticAlgoritm
                 this.Path[firstIdx] = this.Path[secondIdx];
                 this.Path[secondIdx] = tmp;
             }
+            this.PathWeight = CalculatePath(Map);
         }
     }
 }
