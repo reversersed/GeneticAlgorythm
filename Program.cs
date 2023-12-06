@@ -44,11 +44,7 @@
                     //Удаление худшего родителя
                     Population.RemoveAt(PopulationSize - 1);
                 } while (newChildNum-- > 0);
-                for(int i = 0; i < PopulationSize; i++)
-                {
-                    if (Random.Shared.Next(0, 100) < MutationPercentage)
-                        Population[i].Mutate();
-                }
+                Population.ForEach(i => { if (Random.Shared.Next(0, 100) < MutationPercentage)i.Mutate(Map); });
                 Console.WriteLine("Среднее значение оценочной функции поколения #{0} = {1}", ++Generation, Population.Average(i => i.PathWeight));
             } while (Math.Abs(Population.Average(i => i.PathWeight) - Population[0].PathWeight) >= 1);
 
