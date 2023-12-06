@@ -48,7 +48,7 @@
                 //Ранжирование
                 Population.Sort((x, y) => x.PathWeight.CompareTo(y.PathWeight));
 
-                int newChildNum = Random.Shared.Next(1, PopulationSize+1);
+                int newChildNum = Random.Shared.Next(1, PopulationSize + 1);
                 do
                 {
                     //Селекция
@@ -62,7 +62,7 @@
                 } while (newChildNum-- > 0);
 
                 Console.WriteLine("Среднее значение оценочной функции поколения #{0} = {1}", ++Generation, Population.Average(i => i.PathWeight));
-            } while (Population.Average(i => i.PathWeight) - Population[0].PathWeight > 1);
+            } while (Population.Average(i => i.PathWeight) - Population[0].PathWeight >= 1);
 
             Population.Sort((x, y) => x.PathWeight.CompareTo(y.PathWeight));
             Console.WriteLine("\nЛучший потомок {0}-го поколения:",Generation);
