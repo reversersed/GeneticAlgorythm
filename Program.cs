@@ -14,24 +14,8 @@
         const int PopulationSize = 20;
         static void Main(string[] args)
         {
-            List<Genome> Population = new List<Genome>();
+            List<Genome> Population = CreatePopulation();
 
-            List<int> UnseenCities = new List<int>();
-            while (Population.Count < PopulationSize)
-            {
-                for(int i = 1; i < Map[0].Count; i++)
-                    UnseenCities.Add(i);
-
-                List<int> newPath = new List<int>() { 0 };
-                while(UnseenCities.Count > 0)
-                {
-                    int currentCity = Random.Shared.Next(0, UnseenCities.Count);
-                    newPath.Add(UnseenCities[currentCity]);
-                    UnseenCities.RemoveAt(currentCity);
-                }
-                newPath.Add(0);
-                Population.Add(new Genome(newPath, Map));
-            }
             Console.WriteLine("Начальная популяция:");
             Population.Sort((x, y) => x.PathWeight.CompareTo(y.PathWeight));
             Population.ForEach(x =>
@@ -41,7 +25,6 @@
                     Console.Write("->{0}", i);
                 Console.WriteLine(" = {0}", x.PathWeight);
             });
-            Console.WriteLine();
             int Generation = 0;
             do
             {
@@ -71,6 +54,29 @@
                 Console.Write("->{0}", i);
             Console.WriteLine(" = {0}", Population[0].PathWeight);
         }
+
+        private static List<Genome> CreatePopulation()
+        {
+            var templist = new List<Genome>();
+            List<int> UnseenCities = new List<int>();
+            while (templist.Count < PopulationSize)
+            {
+                for (int i = 1; i < Map[0].Count; i++)
+                    UnseenCities.Add(i);
+
+                List<int> newPath = new List<int>() { 0 };
+                while (UnseenCities.Count > 0)
+                {
+                    int currentCity = Random.Shared.Next(0, UnseenCities.Count);
+                    newPath.Add(UnseenCities[currentCity]);
+                    UnseenCities.RemoveAt(currentCity);
+                }
+                newPath.Add(0);
+                templist.Add(new Genome(newPath, Map));
+            }
+            return templist;
+        }
+
         static Genome[] Selection(List<Genome> Population)
         {
             List<int[]> WeightSum = new List<int[]>() { new int[] { 0, Population[0].PathWeight } };
