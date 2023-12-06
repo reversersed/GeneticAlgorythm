@@ -25,7 +25,7 @@ namespace GeneticAlgoritm
             return totalWeight;
         }
 
-        public Genome(Genome parent1, Genome parent2, List<List<int>> Map)
+        public Genome(Genome parent1, Genome parent2, List<List<int>> Map, int MutationPercentage)
         {
             List<int> mask = new List<int>();
             for (int i = 0; i < parent1.Path.Count - 2; i++)
@@ -51,6 +51,8 @@ namespace GeneticAlgoritm
                 if (this.Path[i] == 0)
                     this.Path[i] = Enumerable.Range(0,parent1.Path.Count).Where(x => !this.Path.Contains(x)).First();
             }
+            if (Random.Shared.Next(0, 100) < MutationPercentage)
+                this.Mutate(Map);
             this.PathWeight = CalculatePath(Map);
         }
         public void Mutate(List<List<int>> Map)
