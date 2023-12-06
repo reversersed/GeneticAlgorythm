@@ -51,7 +51,6 @@ namespace GeneticAlgoritm
                 if (this.Path[i] == 0)
                     this.Path[i] = Enumerable.Range(0,parent1.Path.Count).Where(x => !this.Path.Contains(x)).First();
             }
-            this.Mutate(Map);
             this.PathWeight = CalculatePath(Map);
         }
         public void Mutate(List<List<int>> Map)

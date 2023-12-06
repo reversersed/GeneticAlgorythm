@@ -12,6 +12,7 @@
             new List<int> { 12,18,22,21,16,0 }
         };
         const int PopulationSize = 20;
+        const int MutationPercentage = 20;
         static void Main(string[] args)
         {
             List<Genome> Population = CreatePopulation();
@@ -43,9 +44,13 @@
                     //Удаление худшего родителя
                     Population.RemoveAt(PopulationSize - 1);
                 } while (newChildNum-- > 0);
-
+                for(int i = 0; i < PopulationSize; i++)
+                {
+                    if (Random.Shared.Next(0, 100) < MutationPercentage)
+                        Population[i].Mutate();
+                }
                 Console.WriteLine("Среднее значение оценочной функции поколения #{0} = {1}", ++Generation, Population.Average(i => i.PathWeight));
-            } while (Population.Average(i => i.PathWeight) - Population[0].PathWeight >= 1);
+            } while (Math.Abs(Population.Average(i => i.PathWeight) - Population[0].PathWeight) >= 1);
 
             Population.Sort((x, y) => x.PathWeight.CompareTo(y.PathWeight));
             Console.WriteLine("\nЛучший потомок {0}-го поколения:",Generation);
@@ -53,6 +58,7 @@
             foreach (int i in Population[0].Path.Skip(1))
                 Console.Write("->{0}", i);
             Console.WriteLine(" = {0}", Population[0].PathWeight);
+            Console.ReadKey(true);
         }
 
         private static List<Genome> CreatePopulation()
